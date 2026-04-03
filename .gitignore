@@ -1,7 +1,13 @@
 # Default ignored files
 /shelf/
+
+/backend/.idea/workspace.xml
+/.idea
+.env
+
 /workspace.xml
 *.env
+
 # Editor-based HTTP Client requests
 /httpRequests/
 # Ignored default folder with query files
@@ -9,7 +15,9 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
 .vscode/
 .DS_Store
 /.idea
 __pycache__/
+
