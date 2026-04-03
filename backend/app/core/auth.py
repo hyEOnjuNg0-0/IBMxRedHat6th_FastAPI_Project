@@ -1,3 +1,4 @@
+
 from typing import Optional
 
 from fastapi import Request, Response, HTTPException, status
@@ -66,3 +67,6 @@ async def get_optional(request:Request) -> Optional[int]:
         return verify_token(access_token)
     except (ExpiredSignatureError, InvalidSignatureError):
         return None
+
+## test
+
