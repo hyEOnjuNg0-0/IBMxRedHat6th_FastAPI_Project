@@ -7,9 +7,9 @@ class CocktailCrud:
     # 전체 칵테일 조회
     @staticmethod
     async def get_all(db:AsyncSession) -> list[Cocktail]:
-        result=select(Cocktail)
-        result2=await db.execute(result)
-        return result2.scalars().all()
+        query = select(Cocktail).order_by(Cocktail.cocktail_id.desc())
+        result=await db.execute(query)
+        return result.scalars().all()
     
     # 특정 칵테일 정보 상세 조회
     @staticmethod
