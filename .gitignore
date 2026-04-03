@@ -11,3 +11,4 @@ backend/.env
 /dataSources/
 /dataSources.local.xml
 .DS_Store
+.vscode/
