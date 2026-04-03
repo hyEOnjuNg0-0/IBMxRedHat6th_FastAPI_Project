@@ -15,6 +15,7 @@ AsyncSessionLocal = sessionmaker(
 # 동기 db연결 생성하는 함수 (동기적으로 db와 연결한다))
 sync_engine=create_engine(settings.sync_db_url, pool_pre_ping=True)
 
+<<<<<<< HEAD
 # 기본 클래스 설정(Base)
 Base=declarative_base()
 
@@ -32,3 +33,7 @@ Base=declarative_base()
 async def get_db():
     async with AsyncSessionLocal() as session:
         yield session
+=======
+#sqlalchemy orm의 부모클래스
+Base=declarative_base() 
+>>>>>>> 21366d6996667eca179d02cb4a21d4ccbcac30df
