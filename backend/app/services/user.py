@@ -1,9 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import User
 from app.db.scheme.users import UserCreate, UserUpdate, UserLogin
-from sqlalchemy.future import select
 from app.db.crud import UserCrud
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from app.core.jwt_handle import (
     create_access_token,
     create_refresh_token,
@@ -69,5 +68,20 @@ class UserService:
     async def update_user(db:AsyncSession, user:UserUpdate):
         # email로 사용자 찾아서 가져오기
         db_user = await UserCrud.get_by_email(db, user.email)
+        if not db_user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="회원을 찾을 수 없습니다")
 
+        # 입력한 새 비번 해싱해서
+        hash_pw = get_password_hash(user.password)
+        # 새
+        updated_user = UserUpdate(email=user.email, username=user.username, password=hash_pw)
 
+        try:
+            db_user = await UserCrud.update_by_id(db, updated_user)
+            await db.commit()
+            await db.refresh(db_user)
+            return db_user
+
+        except Exception:
+            await db.rollback()
+            raise HTTPException(status_code=401, detail="잘못된 이메일 혹은 비밀번호입니다")
