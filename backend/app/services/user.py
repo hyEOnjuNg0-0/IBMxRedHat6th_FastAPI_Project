@@ -15,7 +15,7 @@ from app.core.jwt_handle import (
 class UserService:
 
     @staticmethod
-    async def get_user(db:AsyncSession, user_id: int) -> User:
+    async def get_user_by_id(db:AsyncSession, user_id: int) -> User:
         db_user = await UserCrud.get_by_id(db, user_id)
         if not db_user:
             raise HTTPException(status_code=404, detail="사용자를 찾을 수 없습니다")
@@ -63,3 +63,11 @@ class UserService:
         await db.refresh(updated_user)
         # 사용자 정보 + jwt 액세스/리프레시 토큰 반환받기
         return updated_user, access_token, refresh_token
+
+
+    @staticmethod
+    async def update_user(db:AsyncSession, user:UserUpdate):
+        # email로 사용자 찾아서 가져오기
+        db_user = await UserCrud.get_by_email(db, user.email)
+
+
