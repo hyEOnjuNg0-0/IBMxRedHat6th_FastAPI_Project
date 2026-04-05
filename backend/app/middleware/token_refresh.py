@@ -1,5 +1,4 @@
 from fastapi import Request
-from starlette.responses import Response
 
 from app.core.jwt_handle import verify_token, create_access_token, create_refresh_token
 from app.core.auth import set_auth_cookies

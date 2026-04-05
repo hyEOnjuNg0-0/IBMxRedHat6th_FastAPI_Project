@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class IngredientSimple(BaseModel):
     ingredients_id: int
     ingredients_name: str
@@ -13,6 +12,10 @@ class CocktailBase(BaseModel):
 
 class CocktailCreate(CocktailBase):
     pass
+
+class CocktailUpdate(BaseModel):
+    ingredients_id: int | None = None
+    ingredients_name: str | None = None
 
 class CocktailInDB(CocktailBase):
     cocktail_id:int
