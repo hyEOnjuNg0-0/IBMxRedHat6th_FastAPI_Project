@@ -8,7 +8,7 @@ from fastapi.concurrency import asynccontextmanager
 from app.middleware.token_refresh import RefreshTokenMiddleware
 from app.routers import user
 
-load_dotenv(dotenv_path="../../../.env")
+load_dotenv(dotenv_path="../.env")
 
 # DB연결 후 모든 테이블 생성(metadata.create_all)
 # 종료 시에 DB 연결 해제
