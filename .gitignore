@@ -1,6 +1,8 @@
 # Default ignored files
 /shelf/
-/.idea/workspace.xml
+.idea/
+backend/.idea/
+backend/__pycache__/
 .env
 # Editor-based HTTP Client requests
 /httpRequests/
@@ -10,3 +12,6 @@
 /dataSources/
 /dataSources.local.xml
 .vscode/
+.DS_Store
+fastapi/
+venv/
