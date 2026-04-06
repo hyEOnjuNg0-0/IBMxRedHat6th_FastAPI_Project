@@ -9,6 +9,7 @@ class Favorite(Base):
         ForeignKey("users.user_id"), primary_key=True)
     cocktail_id: Mapped[int] = mapped_column(
         ForeignKey("cocktails.cocktail_id"), primary_key=True)
+    
 
     user = relationship("User", back_populates="favorites")
     cocktail = relationship("Cocktail", back_populates="favorites")

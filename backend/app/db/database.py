@@ -18,7 +18,6 @@ sync_engine=create_engine(settings.sync_db_url, pool_pre_ping=True)
 # 기본 클래스 설정(Base)
 Base=declarative_base()
 
-
 # 비동기 세션 생성
 # async def get_db():
 #     session=None
@@ -34,9 +33,5 @@ async def get_db():
     async with AsyncSessionLocal() as session:
         yield session
 #sqlalchemy orm의 부모클래스
-Base=declarative_base()
 
-async def get_db():
-    async with AsyncSessionLocal() as session:
-        yield session
 
