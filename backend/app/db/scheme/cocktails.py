@@ -1,12 +1,5 @@
 from pydantic import BaseModel
 
-class IngredientSimple(BaseModel):
-    ingredients_id: int
-    ingredients_name: str
-
-    class Config:
-        from_attributes = True
-
 class CocktailBase(BaseModel):
     cocktail_name:str
 
@@ -14,8 +7,9 @@ class CocktailCreate(CocktailBase):
     pass
 
 class CocktailUpdate(BaseModel):
-    ingredients_id: int | None = None
-    ingredients_name: str | None = None
+    # 기주
+    # 설명
+    pass
 
 class CocktailInDB(CocktailBase):
     cocktail_id:int
@@ -24,4 +18,8 @@ class CocktailInDB(CocktailBase):
         from_attributes = True
 
 class CocktailRead(CocktailInDB):
-    ingredients: list[IngredientSimple] = []
+    cocktail_name : str 
+
+class CocktailDetailRead(CocktailInDB):
+    # 모든 정보
+    pass
