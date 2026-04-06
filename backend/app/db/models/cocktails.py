@@ -10,10 +10,11 @@ class Cocktail(Base):
     __tablename__="cocktails"
 
     cocktail_id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    cocktail_name: Mapped[str] =mapped_column(String(40), nullable=False)
+    cocktail_name: Mapped[str] = mapped_column(String(40), nullable=False)
+    cocktail_base: Mapped[str] = mapped_column(String(40), nullable=False)
+    cocktail_detail: Mapped[str] = mapped_column(String(300), nullable=False)
 
     # created_at: Mapped[Optional[datetime]]= mapped_column(TIMESTAMP, server_default=func.now(), nullable=True)
-
-    ingredients = relationship("Ingredient", secondary="cocktail_ingredients", back_populates="cocktails")
-    reviews = relationship("Review", back_populates="cocktail", cascade="all, delete")
-    favorites = relationship("Favorite", back_populates="cocktail", cascade="all, delete")
+cocktail_ingredients = relationship("CocktailIngredient",back_populates="cocktail",cascade="all, delete")
+reviews = relationship("Review",back_populates="cocktail",cascade="all, delete")
+favorites = relationship("Favorite",back_populates="cocktail",cascade="all, delete")
