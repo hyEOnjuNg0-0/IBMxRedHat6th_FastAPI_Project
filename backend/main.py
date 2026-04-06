@@ -6,7 +6,7 @@ from app.db.database import Base, async_engine
 from fastapi.concurrency import asynccontextmanager
 
 from app.middleware.token_refresh import RefreshTokenMiddleware
-from app.routers import user
+from app.routers import user, cocktail
 
 load_dotenv(dotenv_path="../.env")
 
@@ -39,6 +39,7 @@ app.add_middleware(
 )
 
 app.include_router(user.router)
+app.include_router(cocktail.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
