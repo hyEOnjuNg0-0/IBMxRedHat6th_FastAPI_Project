@@ -13,3 +13,5 @@ backend/__pycache__/
 /dataSources.local.xml
 .vscode/
 .DS_Store
+fastapi/
+venv/
