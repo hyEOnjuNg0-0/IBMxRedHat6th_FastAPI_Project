@@ -27,8 +27,5 @@ class ingredientService:
             raise HTTPException(status_code=404, detail="존재하지 않는 재료")
         
         await db.commit()
-        await db.refresh(ingredient)
-
-        return ingredient
 
     

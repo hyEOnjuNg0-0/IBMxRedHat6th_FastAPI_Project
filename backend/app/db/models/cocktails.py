@@ -15,6 +15,6 @@ class Cocktail(Base):
     cocktail_detail: Mapped[str] = mapped_column(String(300), nullable=False)
 
     # created_at: Mapped[Optional[datetime]]= mapped_column(TIMESTAMP, server_default=func.now(), nullable=True)
-cocktail_ingredients = relationship("CocktailIngredient",back_populates="cocktail",cascade="all, delete")
-reviews = relationship("Review",back_populates="cocktail",cascade="all, delete")
-favorites = relationship("Favorite",back_populates="cocktail",cascade="all, delete")
+    cocktail_ingredients = relationship("CocktailIngredient",back_populates="cocktail",cascade="all, delete")
+    reviews = relationship("Review",back_populates="cocktail",cascade="all, delete")
+    favorites = relationship("Favorite",back_populates="cocktail",cascade="all, delete")
