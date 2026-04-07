@@ -14,9 +14,13 @@ class CocktailCrud:
     # 특정 칵테일 정보 상세 조회
     @staticmethod
     async def get_by_id(db: AsyncSession, cocktail_id: int) -> Cocktail | None:
+<<<<<<< HEAD
 
         result = await db.execute(select(Cocktail).where(Cocktail.cocktail_id == cocktail_id))
 
+=======
+        result = await db.execute(select(Cocktail).where(Cocktail.cocktail_id == cocktail_id))
+>>>>>>> 37f4f7ffa76074a92f1d2d00f515751ee17ed71c
         return result.scalar_one_or_none()
     
     # 칵테일 생성
