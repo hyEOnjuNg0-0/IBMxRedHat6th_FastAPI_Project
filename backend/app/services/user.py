@@ -69,12 +69,14 @@ class UserService:
         # email로 사용자 찾아서 가져오기
         db_user = await UserCrud.get_by_email(db, user.email)
         if not db_user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="회원을 찾을 수 없습니다")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="회원을 찾을 수 없습니다. 정확한 이메일을 입력해주세요")
 
-        # 입력한 새 비번 해싱해서
-        hash_pw = get_password_hash(user.password)
-        # 새
-        updated_user = UserUpdate(email=user.email, username=user.username, password=hash_pw)
+        # 비밀번호 입력했다면 변경, 아니라면 그대로
+        if user.password:
+            user.password = get_password_hash(user.password)
+
+        # 회원 수정
+        updated_user = UserUpdate(email=user.email, username=user.username, password=user.password)
 
         try:
             db_user = await UserCrud.update_by_id(db, updated_user)

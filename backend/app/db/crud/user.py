@@ -6,15 +6,12 @@ from app.db.scheme.users import UserCreate, UserUpdate
 # User 테이블과 관련된 CRUD 작업을 모아둔 클래스
 class UserCrud:
     @staticmethod
-    async def get_by_id(db: AsyncSession, user_id: int) -> User|None:
+    async def get_by_id(db: AsyncSession, user_id: int) -> User | None:
         result = await db.execute(select(User).filter(User.user_id == user_id))
-        # scalar_one_or_none() : 결과 1개면 객체 반환, 없으면 none 반환
         return result.scalar_one_or_none()
 
-    # UserCreate는 scheme/users.py에 위치
     @staticmethod
     async def create(db: AsyncSession, user: UserCreate) -> User:
-        # db에서 모든 사용자 불러오기(언패킹 연산자 이용)
         db_user = User(**user.model_dump())
         db.add(db_user)
         await db.flush()
