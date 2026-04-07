@@ -1,16 +1,14 @@
 from pydantic import BaseModel
 
-class IngredientsBase(BaseModel):
+class IngredientBase(BaseModel):
     ingredient_name:str
 
-class IngredientsCreate(IngredientsBase):
+class IngredientCreate(IngredientBase):
     pass
 
-class IngredientsInDB(IngredientsBase):
+class IngredientRead(IngredientBase):
     ingredient_id:int
 
     class Config:
         from_attributes = True
-
-class IngredientsRead(IngredientsInDB):
-    ingredient_name:str
+    

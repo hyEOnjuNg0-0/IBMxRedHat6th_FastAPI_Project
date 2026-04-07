@@ -4,7 +4,7 @@ from app.db.database import get_db
 from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailRead, CocktailDetailRead
 from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
-from app.db.scheme.ingredients import IngredientsRead
+from app.db.scheme.ingredients import IngredientRead
 
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
@@ -60,7 +60,7 @@ async def delete_cocktail(
 
 
 # 특정 칵테일 재료 조회
-@router.get("/{cocktail_id}/ingredients", response_model=list[IngredientsRead])
+@router.get("/{cocktail_id}/ingredients", response_model=list[IngredientRead])
 async def get_ingredients_by_cocktail_id(
     cocktail_id: int,
     db: AsyncSession = Depends(get_db),
