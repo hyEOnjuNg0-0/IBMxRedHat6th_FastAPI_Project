@@ -5,7 +5,7 @@ from app.db.crud import IngredientCrud
 from fastapi import HTTPException
 
 # crud는 db 쿼리, service는 비지니스 로직
-class ingredientService:
+class IngredientService:
     # 새 재료 등록
     @staticmethod
     async def create_ingredient(db:AsyncSession, ingredient:IngredientCreate) -> Ingredient:
