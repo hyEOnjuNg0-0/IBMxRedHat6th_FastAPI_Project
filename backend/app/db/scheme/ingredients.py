@@ -8,7 +8,6 @@ class IngredientCreate(IngredientBase):
 
 class IngredientRead(IngredientBase):
     ingredient_id:int
-    ingredient_name:str
 
     class Config:
         from_attributes = True
