@@ -13,4 +13,4 @@ class IngredientsInDB(IngredientsBase):
         from_attributes = True
 
 class IngredientsRead(IngredientsInDB):
-    ingredient_name:str 
+    ingredient_name:str

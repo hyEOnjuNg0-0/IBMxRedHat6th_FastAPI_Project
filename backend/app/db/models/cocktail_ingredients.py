@@ -4,7 +4,6 @@ from sqlalchemy import ForeignKey
 
 class CocktailIngredient(Base):
     __tablename__ = "cocktail_ingredients"
-    cocktailIngredient_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     cocktail_id: Mapped[int] = mapped_column(ForeignKey("cocktails.cocktail_id"))
     ingredient_id: Mapped[int] = mapped_column(ForeignKey("ingredients.ingredient_id"))
 

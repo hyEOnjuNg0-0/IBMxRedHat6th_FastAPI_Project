@@ -58,8 +58,5 @@ class CocktailService:
             raise HTTPException(status_code=404, detail="존재하지 않는 칵테일")
         
         await db.commit()
-        await db.refresh(cocktail)
-
-        return cocktail
 
     
