@@ -9,7 +9,7 @@ from typing import Optional
 class Ingredient(Base):
     __tablename__="ingredients"
 
-    ingredients_id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    ingredients_name: Mapped[str] =mapped_column(String(40), nullable=False)
+    ingredient_id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    ingredient_name: Mapped[str] =mapped_column(String(40), nullable=False)
 
-    cocktails = relationship("Cocktail", secondary="cocktail_ingredients", back_populates="ingredients")
+    cocktail_ingredients = relationship("CocktailIngredient",back_populates="ingredient",cascade="all, delete")

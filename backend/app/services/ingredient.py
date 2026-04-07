@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import Ingredient
-from app.db.scheme.ingredients import IngredientCreate, IngredientUpdate
+from app.db.scheme.ingredients import IngredientCreate
 from app.db.crud import IngredientCrud
 from fastapi import HTTPException
 
