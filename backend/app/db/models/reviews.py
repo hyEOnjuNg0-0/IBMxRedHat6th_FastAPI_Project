@@ -14,9 +14,7 @@ class Review(Base):
     title:Mapped[str]=mapped_column(String(255), nullable=False)
     description:Mapped[Optional[str]]=mapped_column(String(500), nullable=True)
     user_id:Mapped[int]=mapped_column(ForeignKey("users.user_id"), nullable=False, index=True)
-    created_at:Mapped[datetime]=mapped_column(
-        TIMESTAMP, server_default=func.now(), nullable=False
-    )
+    created_at:Mapped[datetime]=mapped_column(TIMESTAMP, server_default=func.now(), nullable=False)
 
     user = relationship("User", back_populates="reviews")
     cocktail = relationship("Cocktail", back_populates="reviews")

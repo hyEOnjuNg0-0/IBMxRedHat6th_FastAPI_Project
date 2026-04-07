@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
 from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailRead, CocktailDetailRead
-from app.db.scheme.cocktail_ingredients import CocktailIngredientRead, CocktailIngredientCreate
+from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
+from app.db.scheme.ingredients import IngredientRead
 
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
@@ -59,7 +60,7 @@ async def delete_cocktail(
 
 
 # 특정 칵테일 재료 조회
-@router.get("/{cocktail_id}/ingredients", response_model=list[CocktailIngredientRead])
+@router.get("/{cocktail_id}/ingredients", response_model=list[IngredientRead])
 async def get_ingredients_by_cocktail_id(
     cocktail_id: int,
     db: AsyncSession = Depends(get_db),
@@ -68,13 +69,17 @@ async def get_ingredients_by_cocktail_id(
 
 
 # 특정 칵테일 재료 추가
-@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientRead)
+@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientCreate)
 async def add_cocktail_ingredient(
     cocktail_id: int,
     cocktail_ingredient: CocktailIngredientCreate,
     db: AsyncSession = Depends(get_db),
 ):
-    return await CocktailIngredientService.create_cocktail_ingredient(db, cocktail_ingredient)
+    return await CocktailIngredientService.create_cocktail_ingredient(
+        db, 
+        cocktail_id, 
+        cocktail_ingredient.ingredient_id
+        )
 
 
 # 특정 칵테일 재료 제거

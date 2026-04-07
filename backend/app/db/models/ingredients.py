@@ -11,6 +11,5 @@ class Ingredient(Base):
 
     ingredients_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     ingredients_name: Mapped[str] =mapped_column(String(40), nullable=False)
-    # created_at: Mapped[Optional[datetime]]= mapped_column(TIMESTAMP, server_default=func.now(), nullable=True)
 
     cocktails = relationship("Cocktail", secondary="cocktail_ingredients", back_populates="ingredients")

@@ -4,11 +4,8 @@ class CocktailBase(BaseModel):
     cocktail_name:str
 
 class CocktailCreate(CocktailBase):
-    pass
-
-class CocktailUpdate(BaseModel):
-    # 기주
-    # 설명
+    cocktail_base:str
+    cocktail_detail:str
     pass
 
 class CocktailInDB(CocktailBase):
@@ -18,8 +15,13 @@ class CocktailInDB(CocktailBase):
         from_attributes = True
 
 class CocktailRead(CocktailInDB):
-    cocktail_name : str 
+    cocktail_name:str 
 
 class CocktailDetailRead(CocktailInDB):
-    # 모든 정보
-    pass
+    cocktail_name:str
+    cocktail_base:str
+    cocktail_detail:str
+
+class CocktailUpdate(CocktailInDB):
+    cocktail_base:str
+    cocktail_detail:str
