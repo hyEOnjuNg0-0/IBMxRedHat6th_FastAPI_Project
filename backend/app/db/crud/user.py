@@ -20,7 +20,6 @@ class UserCrud:
     # UserUpdate는 scheme/users.py에 위치
     @staticmethod
     async def update_by_id(db: AsyncSession, user_id: int, user:UserUpdate) -> User|None:
-        # db에서 사용자id로 검색하여 사용자 불러오기
         db_user = await db.get(User, user_id)
         # 일치하는 사용자가 있다면
         if db_user:

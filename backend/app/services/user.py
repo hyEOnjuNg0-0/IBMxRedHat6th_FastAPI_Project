@@ -12,7 +12,6 @@ from app.core.jwt_handle import (
 
 # CRUD는 UserCrud에서 처리하고, 비즈니스 규칙(유효성 검사, 비밀번호 해시, 예외처리 등)을 추가
 class UserService:
-
     @staticmethod
     async def get_user_by_id(db:AsyncSession, user_id: int) -> User:
         db_user = await UserCrud.get_by_id(db, user_id)
@@ -65,9 +64,9 @@ class UserService:
 
 
     @staticmethod
-    async def update_user(db:AsyncSession, user:UserUpdate):
+    async def update_user(db:AsyncSession, user_id: int ,user: UserUpdate):
         # email로 사용자 찾아서 가져오기
-        db_user = await UserCrud.get_by_email(db, user.email)
+        db_user = await UserCrud.get_by_id(db, user_id)
         if not db_user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="회원을 찾을 수 없습니다. 정확한 이메일을 입력해주세요")
 
@@ -79,7 +78,7 @@ class UserService:
         updated_user = UserUpdate(email=user.email, username=user.username, password=user.password)
 
         try:
-            db_user = await UserCrud.update_by_id(db, updated_user)
+            db_user = await UserCrud.update_by_id(db, user_id ,updated_user)
             await db.commit()
             await db.refresh(db_user)
             return db_user

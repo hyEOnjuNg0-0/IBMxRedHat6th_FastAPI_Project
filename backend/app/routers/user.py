@@ -30,7 +30,7 @@ async def get_user(user_id:int = Depends(get_user_id), db: AsyncSession = Depend
 '''내 정보 수정'''
 @router.put("/me", response_model=UserRead)
 async def update_user(user:UserUpdate, user_id:int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
-    return await UserService.update_user(db, user)
+    return await UserService.update_user(db, user_id, user)
 
 '''JWT 토큰 쿠키 삭제'''
 @router.post("/logout", response_model=bool)
