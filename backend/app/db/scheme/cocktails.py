@@ -11,6 +11,8 @@ class CocktailDetail(CocktailBase):
     cocktail_id:int
     cocktail_base:str
     cocktail_detail:str
+    cocktail_base:str
+    cocktail_detail:str
 
     class Config:
         from_attributes = True

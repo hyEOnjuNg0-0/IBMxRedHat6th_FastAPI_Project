@@ -11,5 +11,5 @@ class Ingredient(Base):
 
     ingredient_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     ingredient_name: Mapped[str] =mapped_column(String(40), nullable=False)
-    
+
     cocktail_ingredients = relationship("CocktailIngredient",back_populates="ingredient",cascade="all, delete")

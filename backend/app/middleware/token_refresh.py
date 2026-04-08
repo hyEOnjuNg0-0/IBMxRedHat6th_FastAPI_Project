@@ -52,4 +52,3 @@ class RefreshTokenMiddleware(BaseHTTPMiddleware):
 
         set_auth_cookies(response, new_access_token, new_refresh_token)
         return response
-    
