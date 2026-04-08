@@ -6,22 +6,17 @@ class CocktailBase(BaseModel):
 class CocktailCreate(CocktailBase):
     cocktail_base:str
     cocktail_detail:str
-    pass
 
-class CocktailInDB(CocktailBase):
+class CocktailDetail(CocktailBase):
     cocktail_id:int
+    cocktail_base:str
+    cocktail_detail:str
 
     class Config:
         from_attributes = True
 
-class CocktailRead(CocktailInDB):
-    cocktail_name:str 
+class CocktailRead(CocktailBase):
+    pass
 
-class CocktailDetailRead(CocktailInDB):
-    cocktail_name:str
-    cocktail_base:str
-    cocktail_detail:str
-
-class CocktailUpdate(CocktailInDB):
-    cocktail_base:str
-    cocktail_detail:str
+    class Config:
+        from_attributes = True
