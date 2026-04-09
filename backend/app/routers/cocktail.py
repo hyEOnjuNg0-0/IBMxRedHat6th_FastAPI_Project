@@ -13,6 +13,7 @@ router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
 # response_model : 클라이언트에게 최종적으로 보여줄 응답 데이터 구조
 # 전체 칵테일 목록 조회
 @router.get("", response_model=list[CocktailListRead])
+@router.get("", response_model=list[CocktailListRead])
 async def get_all_cocktails(db: AsyncSession = Depends(get_db)):
     return await CocktailService.get_all_cocktails(db)
 
@@ -69,7 +70,7 @@ async def get_ingredients_by_cocktail_id(
 
 
 # 특정 칵테일 재료 추가
-@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientCreate)
+@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientRead)
 async def add_cocktail_ingredient(
     cocktail_id: int,
     cocktail_ingredient: CocktailIngredientCreate,

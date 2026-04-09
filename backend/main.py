@@ -44,6 +44,7 @@ app.add_middleware(
 
 app.include_router(user.router)
 app.include_router(cocktail.router)
+app.include_router(ingredient.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)

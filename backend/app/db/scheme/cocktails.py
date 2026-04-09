@@ -1,11 +1,13 @@
 from pydantic import BaseModel
 
 class CocktailBase(BaseModel):
-    cocktail_name:str
+    cocktail_name: str
+
 
 class CocktailCreate(CocktailBase):
-    cocktail_base:str
-    cocktail_detail:str
+    cocktail_base: str
+    cocktail_detail: str
+
 
 class CocktailUpdate(BaseModel):
     cocktail_name:str | None = None    
