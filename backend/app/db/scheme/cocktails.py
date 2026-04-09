@@ -6,7 +6,6 @@ class CocktailBase(BaseModel):
 class CocktailCreate(CocktailBase):
     cocktail_base:str
     cocktail_detail:str
-    pass
 
 class CocktailInDB(CocktailBase):
     cocktail_id:int
