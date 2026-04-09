@@ -3,9 +3,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 from sqlalchemy import String, TIMESTAMP, func, ForeignKey
 from typing import Optional
-from app.db.models.users import User
-from app.db.models.cocktails import Cocktail
-
 
 class Review(Base):
     __tablename__="reviews"
