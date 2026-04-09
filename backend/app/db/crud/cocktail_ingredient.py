@@ -15,7 +15,7 @@ class CocktailIngredientCrud:
             select(Ingredient)
             .join(
                 CocktailIngredient,
-                CocktailIngredient.ingredient_id == Ingredient.ingredients_id
+                CocktailIngredient.ingredient_id == Ingredient.ingredient_id
             )
             .where(CocktailIngredient.cocktail_id == cocktail_id)
         )
