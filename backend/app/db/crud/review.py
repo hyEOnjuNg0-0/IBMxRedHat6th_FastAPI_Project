@@ -4,7 +4,15 @@ from sqlalchemy.future import select
 from app.db.models import Review
 
 class ReviewCrud:
-    # 게시글 id로 검색
+    # 리뷰 작성
+    @staticmethod
+    async def create_review(db: AsyncSession, review: ReviewCreate) -> Review | None:
+        db_review = Review(**review.model_dump())
+        db.add(db_review)
+        await db.flush()
+        return db_review
+
+    # 리뷰 id로 검색
     @staticmethod
     async def get_by_id(db: AsyncSession, review_id:int) -> Review | None:
         result = await db.execute(select(Review).filter(Review.review_id==review_id))
@@ -34,6 +42,7 @@ class ReviewCrud:
         result = await db.execute(select(Review))
         return result.scalars().all()
 
+    # 리뷰 수정하기
     @staticmethod
     async def update_by_id(db:AsyncSession, review_id:int, review:Review) -> Review | None:
         db_review = await db.get(Review, review_id)

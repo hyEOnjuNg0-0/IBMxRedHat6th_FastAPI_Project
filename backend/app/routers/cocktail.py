@@ -5,7 +5,7 @@ from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailRead, CocktailDetailRead
 from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
 from app.db.scheme.ingredients import IngredientRead
-
+from app.services.review import ReviewService
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
 
@@ -91,3 +91,8 @@ async def delete_cocktail_ingredient(
 ):
     await CocktailIngredientService.delete_cocktail_ingredient(db, cocktail_id, ingredient_id)
     return {"message": "칵테일 재료가 삭제되었습니다"}
+
+# 리뷰 작성
+@router.post("/{cocktail_id}/reviews")
+async def create_review(cocktail_id: int,  review:ReviewCreate, db: AsyncSession = Depends(get_db)):
+    return await ReviewService.create_review()
