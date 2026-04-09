@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
 from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailListRead, CocktailDetail
-from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
+from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate, CocktailIngredientRead
 from app.db.scheme.ingredients import IngredientRead
 
 

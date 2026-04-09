@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from app.db.database import Base, async_engine
 from fastapi.concurrency import asynccontextmanager
 from app.middleware.token_refresh import RefreshTokenMiddleware
-from app.routers import user, cocktail
+from app.routers import user, cocktail, ingredient
 from app.seed import seed_all
 
 load_dotenv(dotenv_path="../.env")
