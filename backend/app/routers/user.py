@@ -5,6 +5,8 @@ from app.db.database import get_db
 from app.db.scheme.users import UserRead, UserLogin, UserCreate, UserUpdate
 from app.services import UserService
 from app.core.auth import set_auth_cookies, get_user_id
+from app.db.scheme.cocktails import CocktailListRead
+from app.services.favorite import FavoriteService
 
 router = APIRouter(prefix="/users", tags=["User"])
 
@@ -38,3 +40,8 @@ async def logout(response:Response):
     response.delete_cookie(key="access_token")
     response.delete_cookie(key="refresh_token")
     return True
+
+'''내 즐겨찾기 칵테일 목록 조회'''
+@router.get("/me/favorites", response_model=list[CocktailListRead])
+async def get_my_favorites(user_id: int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await FavoriteService.get_my_favorites(db, user_id)

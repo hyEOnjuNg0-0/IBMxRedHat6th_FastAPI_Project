@@ -2,24 +2,27 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
 from app.db.scheme.reviews import ReviewCreate
-from app.services import CocktailService, CocktailIngredientService
-from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailRead, CocktailDetailRead
-from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
+from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailListRead, CocktailDetail
+from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate, CocktailIngredientRead
 from app.db.scheme.ingredients import IngredientRead
 from app.services.review import ReviewService
+from app.services.favorite import FavoriteService
+from app.services import CocktailService, CocktailIngredientService
+from app.core.auth import get_user_id
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
 
 
 # response_model : 클라이언트에게 최종적으로 보여줄 응답 데이터 구조
 # 전체 칵테일 목록 조회
-@router.get("", response_model=list[CocktailRead])
+@router.get("", response_model=list[CocktailListRead])
+@router.get("", response_model=list[CocktailListRead])
 async def get_all_cocktails(db: AsyncSession = Depends(get_db)):
     return await CocktailService.get_all_cocktails(db)
 
 
 # 새 칵테일 등록
-@router.post("", response_model=CocktailDetailRead)
+@router.post("", response_model=CocktailDetail)
 async def create_cocktail(
     cocktail: CocktailCreate,
     db: AsyncSession = Depends(get_db),
@@ -28,7 +31,7 @@ async def create_cocktail(
 
 
 # 특정 칵테일 정보 상세 조회
-@router.get("/{cocktail_id}", response_model=CocktailDetailRead)
+@router.get("/{cocktail_id}", response_model=CocktailDetail)
 async def get_cocktail(
     cocktail_id: int,
     db: AsyncSession = Depends(get_db),
@@ -37,7 +40,7 @@ async def get_cocktail(
 
 
 # 특정 칵테일 정보 수정
-@router.put("/{cocktail_id}", response_model=CocktailDetailRead)
+@router.put("/{cocktail_id}", response_model=CocktailDetail)
 async def update_cocktail(
     cocktail_id: int,
     cocktail_data: CocktailUpdate,
@@ -70,7 +73,7 @@ async def get_ingredients_by_cocktail_id(
 
 
 # 특정 칵테일 재료 추가
-@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientCreate)
+@router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientRead)
 async def add_cocktail_ingredient(
     cocktail_id: int,
     cocktail_ingredient: CocktailIngredientCreate,
@@ -97,3 +100,8 @@ async def delete_cocktail_ingredient(
 @router.post("/{cocktail_id}/reviews")
 async def create_review(cocktail_id: int,  review:ReviewCreate, db: AsyncSession = Depends(get_db)):
     return await ReviewService.create_review()
+
+# 즐겨찾기에 칵테일 추가
+@router.post("/{cocktail_id}/favorites", response_model=bool)
+async def add_favorite(cocktail_id: int, user_id: int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await FavoriteService.add_favorite(db, user_id, cocktail_id)

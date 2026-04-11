@@ -8,7 +8,7 @@ from app.services import IngredientService
 router=APIRouter(prefix="/ingredients", tags=["Ingredient"])
 
 # 새 재료 등록
-@router.post("", response_model=IngredientCreate)
+@router.post("", response_model=IngredientRead)
 async def create_ingredient(
     ingredient: IngredientCreate,
     db: AsyncSession = Depends(get_db),

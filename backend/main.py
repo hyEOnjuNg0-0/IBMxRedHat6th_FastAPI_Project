@@ -2,11 +2,13 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from app.db.database import Base, async_engine
 from fastapi.concurrency import asynccontextmanager
-
 from app.middleware.token_refresh import RefreshTokenMiddleware
-from app.routers import cocktail, review, user
+from app.routers import user, cocktail, ingredient, review
+from app.seed import seed_all
+
 
 load_dotenv(dotenv_path="../.env")
 
@@ -18,6 +20,8 @@ async def lifespan(app:FastAPI):
         # conn.run_sync : db 연결 후
         # Base.metadata.create_all : 테이블을 생성하라
         await conn.run_sync(Base.metadata.create_all)
+    seed_all()
+
     yield
     await async_engine.dispose()
 
@@ -41,6 +45,7 @@ app.add_middleware(
 app.include_router(cocktail.router)
 app.include_router(review.router)
 app.include_router(user.router)
+app.include_router(ingredient.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)

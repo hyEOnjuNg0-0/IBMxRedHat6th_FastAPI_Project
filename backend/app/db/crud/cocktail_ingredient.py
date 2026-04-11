@@ -1,7 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.db.models import CocktailIngredient, Ingredient
-from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
 from fastapi import HTTPException
 
 class CocktailIngredientCrud:
@@ -15,7 +14,7 @@ class CocktailIngredientCrud:
             select(Ingredient)
             .join(
                 CocktailIngredient,
-                CocktailIngredient.ingredient_id == Ingredient.ingredients_id
+                CocktailIngredient.ingredient_id == Ingredient.ingredient_id
             )
             .where(CocktailIngredient.cocktail_id == cocktail_id)
         )
@@ -54,7 +53,7 @@ class CocktailIngredientCrud:
 
     # 특정 칵테일 재료 제거
     @staticmethod
-    async def delete(db: AsyncSession, cocktail_id: int,ingredient_id: int) -> CocktailIngredient | None:
+    async def delete(db: AsyncSession, cocktail_id: int, ingredient_id: int) -> CocktailIngredient | None:
         ingredient = await db.get(CocktailIngredient, 
                                   {"cocktail_id": cocktail_id, "ingredient_id": ingredient_id})
 
