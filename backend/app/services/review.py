@@ -9,7 +9,6 @@ class ReviewService:
     # 리뷰 작성
     @staticmethod
     async def create_review(cocktail_id:int, db: AsyncSession, review: ReviewCreate):
-
         # title, description을 DB에 저장
         created_review = ReviewCreate(title=review.title, description=review.description)
 

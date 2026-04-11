@@ -2,6 +2,8 @@ from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.db.models import Review
+from app.db.scheme.reviews import ReviewCreate
+
 
 class ReviewCrud:
     # 리뷰 작성

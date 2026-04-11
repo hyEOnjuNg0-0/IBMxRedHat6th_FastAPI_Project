@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
+from app.db.scheme.reviews import ReviewCreate
 from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailRead, CocktailDetailRead
 from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate
