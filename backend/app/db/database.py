@@ -15,6 +15,12 @@ AsyncSessionLocal = sessionmaker(
 # 동기 db연결 생성하는 함수 (동기적으로 db와 연결한다))
 sync_engine=create_engine(settings.sync_db_url, pool_pre_ping=True)
 
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=sync_engine
+)
+
 # 기본 클래스 설정(Base)
 Base=declarative_base()
 

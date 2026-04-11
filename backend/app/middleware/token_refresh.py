@@ -6,10 +6,10 @@ from app.db.database import get_db
 from starlette.middleware.base import BaseHTTPMiddleware
 from jwt import ExpiredSignatureError, InvalidTokenError
 
-#클라이언트가 호출하면 미들웨어가 먼저 실행된다!!
-#엑세스토큰을 먼저 확인
-#미들웨어 없으면, 15분마다 토큰만료에러보고 다시 로그인을 해야됨...
-#=> 자동으로 새로운 액세스 토큰 발급받고 요청 계속 진행시키기 위해 미들웨어에다 넣음
+# 클라이언트가 호출하면 미들웨어가 먼저 실행된다!!
+# 엑세스토큰을 먼저 확인
+# 미들웨어 없으면, 15분마다 토큰만료에러보고 다시 로그인을 해야됨...
+# => 자동으로 새로운 액세스 토큰 발급받고 요청 계속 진행시키기 위해 미들웨어에다 넣음
 
 #BaseHTTPMiddleware를 상속받아 미들웨어를 만들거임
 #요청(request) -> 처리(handler) -> 응답(response) 사이에 추가로직 삽입 가능
