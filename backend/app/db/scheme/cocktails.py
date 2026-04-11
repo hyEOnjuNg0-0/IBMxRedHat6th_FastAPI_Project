@@ -9,6 +9,11 @@ class CocktailCreate(CocktailBase):
     cocktail_detail: str
 
 
+class CocktailUpdate(BaseModel):
+    cocktail_name:str | None = None    
+    cocktail_base:str | None = None
+    cocktail_detail:str | None = None
+
 class CocktailListRead(CocktailBase):
     cocktail_id: int
 
@@ -16,12 +21,6 @@ class CocktailListRead(CocktailBase):
         from_attributes = True
 
 
-class CocktailDetailRead(CocktailListRead):
+class CocktailDetail(CocktailListRead):
     cocktail_base: str
     cocktail_detail: str
-
-
-class CocktailUpdate(CocktailBase):
-    cocktail_name: str | None = None
-    cocktail_base: str | None = None
-    cocktail_detail: str | None = None
