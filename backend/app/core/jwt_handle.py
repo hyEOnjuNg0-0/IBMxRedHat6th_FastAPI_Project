@@ -12,6 +12,7 @@ pwd_crypt = CryptContext(schemes=["bcrypt"])
 '''비밀번호 암호화'''
 def get_password_hash(password:str):
     # 입력한 비밀번호를 72바이트까지 잘라서 'utf-8'로 encoding
+    # bcrypt는 72바이트까지만 처리
     trunc_password = password.encode("utf-8")[:72]
     return pwd_crypt.hash(trunc_password)
 
@@ -22,7 +23,9 @@ def verify_password(plain_pw:str, hashed_pw:str) -> bool:
     return pwd_crypt.verify(trunc_password, hashed_pw)
 
 '''JWT 토큰 생성'''
-# jwt 생성 함수(암호화된 jwt문자열 반환)
+# jwt 생성 함수(암호화된 jwt 문자열 반환)
+# header.payload.signature
+# access, refresh 둘 다 여기서 생성
 # uid(userid)
 def create_token(uid:int, expires_delta:timedelta, **kwargs) -> str:
     # 추가정보를 페이로드에 넣고 싶을 때
@@ -37,7 +40,7 @@ def create_token(uid:int, expires_delta:timedelta, **kwargs) -> str:
 def create_access_token(uid:int) -> str:
     return create_token(uid=uid, expires_delta=settings.access_token_expire_seconds)
 
-# 리프레시 토큰 관리(재발급/ 로그아웃 시 무효화)
+# 리프레시 토큰 관리 (access token 재발급용/ 로그아웃 시 무효화)
 def create_refresh_token(uid:int) -> str:
     return create_token(uid=uid, jti=str(uuid.uuid4()), expires_delta=settings.refresh_token_expire_seconds)
 

@@ -5,6 +5,8 @@ from app.services import CocktailService, CocktailIngredientService
 from app.db.scheme.cocktails import CocktailCreate, CocktailUpdate, CocktailListRead, CocktailDetailRead
 from app.db.scheme.cocktail_ingredients import CocktailIngredientCreate, CocktailIngredientRead
 from app.db.scheme.ingredients import IngredientRead
+from app.services.favorite import FavoriteService
+from app.core.auth import get_user_id
 
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
@@ -91,3 +93,9 @@ async def delete_cocktail_ingredient(
 ):
     await CocktailIngredientService.delete_cocktail_ingredient(db, cocktail_id, ingredient_id)
     return {"message": "칵테일 재료가 삭제되었습니다"}
+
+
+# 즐겨찾기에 칵테일 추가
+@router.post("/{cocktail_id}/favorites", response_model=bool)
+async def add_favorite(cocktail_id: int, user_id: int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await FavoriteService.add_favorite(db, user_id, cocktail_id)

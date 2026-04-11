@@ -6,7 +6,7 @@ from app.db.database import Base, async_engine
 from fastapi.concurrency import asynccontextmanager
 
 from app.middleware.token_refresh import RefreshTokenMiddleware
-from app.routers import user, cocktail, ingredient
+from app.routers import user, cocktail, ingredient, favorite
 
 load_dotenv(dotenv_path="../.env")
 

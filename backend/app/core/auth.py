@@ -5,6 +5,10 @@ from jwt import ExpiredSignatureError, InvalidSignatureError
 from app.core.settings import settings
 from app.core.jwt_handle import verify_token
 
+# 로그인 성공 시 쿠키에 토큰 저장
+# 요청 들어올 때 쿠키에서 access token 읽기
+# 토큰에서 user_id 꺼내서 인증
+
 # JWT 토큰을 쿠키로 설정
 def set_auth_cookies(response: Response, access_token:str, refresh_token:str) -> None:
     response.set_cookie(
