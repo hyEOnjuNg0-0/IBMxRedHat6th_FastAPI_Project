@@ -21,5 +21,5 @@ class User(Base):
     refresh_token: Mapped[Optional[str]] =mapped_column(String(255), nullable=True)
     created_at: Mapped[Optional[datetime]] =mapped_column(TIMESTAMP, server_default=func.now(), nullable=True)
 
-    reviews: Mapped[List["Review"]] = relationship("Review", back_populates="user")
-    favorites: Mapped[List["Favorite"]] = relationship("Favorite", back_populates="user")
+    reviews: Mapped[List["Review"]] = relationship("Review", back_populates="user", cascade="all, delete-orphan")
+    favorites: Mapped[List["Favorite"]] = relationship("Favorite", back_populates="user", cascade="all, delete-orphan")

@@ -35,13 +35,13 @@ class UserCrud:
         return None
 
     @staticmethod
-    async def delete_by_id(db: AsyncSession, user_id: int) -> User | None:
+    async def delete_by_id(db: AsyncSession, user_id: int) -> bool | None:
         # 삭제 전 객체를 가져와서 삭제
         db_user = await db.get(User, user_id)
         if db_user:
             await db.delete(db_user)
             await db.flush()
-            return db_user
+            return True
         return None
 
     @staticmethod

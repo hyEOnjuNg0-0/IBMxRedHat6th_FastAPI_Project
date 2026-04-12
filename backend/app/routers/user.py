@@ -2,11 +2,13 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.database import get_db
+from app.db.scheme.reviews import ReviewRead
 from app.db.scheme.users import UserRead, UserLogin, UserCreate, UserUpdate
 from app.services import UserService
 from app.core.auth import set_auth_cookies, get_user_id
 from app.db.scheme.cocktails import CocktailListRead
 from app.services.favorite import FavoriteService
+from app.services.review import ReviewService
 
 router = APIRouter(prefix="/users", tags=["User"])
 
@@ -40,6 +42,17 @@ async def logout(response:Response):
     response.delete_cookie(key="access_token")
     response.delete_cookie(key="refresh_token")
     return True
+
+'''회원 탈퇴'''
+@router.delete("/me", response_model=bool)
+async def delete_user(user_id:int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await UserService.delete_user(db, user_id)
+
+
+'''내가 작성한 리뷰 조회'''
+@router.get("/me/reviews", response_model=list[ReviewRead])
+async def get_my_reviews(user_id: int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await ReviewService.get_my_reviews(db, user_id)
 
 '''내 즐겨찾기 칵테일 목록 조회'''
 @router.get("/me/favorites", response_model=list[CocktailListRead])

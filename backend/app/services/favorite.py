@@ -30,4 +30,4 @@ class FavoriteService:
     # 내 즐겨찾기 칵테일 목록 조회
     @staticmethod
     async def get_my_favorites(db: AsyncSession, user_id: int) -> list[Cocktail]:
-        return await FavoriteCrud.get_cocktails_by_user_id(db, user_id)
+        return await FavoriteCrud.get_favorites_by_user_id(db, user_id)

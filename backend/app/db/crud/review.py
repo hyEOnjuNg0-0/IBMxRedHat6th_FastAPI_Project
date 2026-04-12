@@ -1,9 +1,8 @@
 from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.db.models import Review
+from app.db.models import Review, Cocktail
 from app.db.scheme.reviews import ReviewCreate
-
 
 class ReviewCrud:
     # 리뷰 작성
@@ -14,11 +13,23 @@ class ReviewCrud:
         await db.flush()
         return db_review
 
-    # 리뷰 id로 검색
+    # 칵테일 id로 검색
     @staticmethod
     async def get_by_id(db: AsyncSession, review_id:int) -> Review | None:
         result = await db.execute(select(Review).filter(Review.review_id==review_id))
         return result.scalar_one_or_none()
+
+    # 칵테일 id로 검색
+    @staticmethod
+    async def get_by_cocktail_id(db: AsyncSession, cocktail_id:int) -> Review | None:
+        result = await db.execute(select(Review).filter(Review.cocktail_id==cocktail_id))
+        return result.scalar_one_or_none()
+
+    # 회원 id로 검색
+    @staticmethod
+    async def get_by_user_id(db: AsyncSession, user_id: int) -> Review | None:
+        result = await db.execute(select(Review).filter(Review.user_id==user_id))
+        return result.scalars().all()
 
     # 제목 검색
     @staticmethod

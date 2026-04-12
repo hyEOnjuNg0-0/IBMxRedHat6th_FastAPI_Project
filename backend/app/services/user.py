@@ -62,7 +62,7 @@ class UserService:
         # 사용자 정보 + jwt 액세스/리프레시 토큰 반환받기
         return updated_user, access_token, refresh_token
 
-
+    '''내 정보 수정'''
     @staticmethod
     async def update_user(db:AsyncSession, user_id: int ,user: UserUpdate):
         # email로 사용자 찾아서 가져오기
@@ -86,3 +86,14 @@ class UserService:
         except Exception:
             await db.rollback()
             raise HTTPException(status_code=401, detail="잘못된 이메일 혹은 비밀번호입니다")
+
+    '''회원 탈퇴'''
+    @staticmethod
+    async def delete_user(db:AsyncSession, user_id: int) -> bool:
+        user = await UserCrud.delete_by_id(db, user_id)
+
+        if not user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="존재하지 않는 회원입니다")
+
+        await db.commit()
+        return True

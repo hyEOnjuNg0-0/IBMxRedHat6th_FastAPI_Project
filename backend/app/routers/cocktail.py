@@ -12,14 +12,10 @@ from app.core.auth import get_user_id
 
 router = APIRouter(prefix="/cocktails", tags=["Cocktail"])
 
-
-# response_model : 클라이언트에게 최종적으로 보여줄 응답 데이터 구조
 # 전체 칵테일 목록 조회
-@router.get("", response_model=list[CocktailListRead])
 @router.get("", response_model=list[CocktailListRead])
 async def get_all_cocktails(db: AsyncSession = Depends(get_db)):
     return await CocktailService.get_all_cocktails(db)
-
 
 # 새 칵테일 등록
 @router.post("", response_model=CocktailDetail)
@@ -29,7 +25,6 @@ async def create_cocktail(
 ):
     return await CocktailService.create_cocktail(db, cocktail)
 
-
 # 특정 칵테일 정보 상세 조회
 @router.get("/{cocktail_id}", response_model=CocktailDetail)
 async def get_cocktail(
@@ -37,7 +32,6 @@ async def get_cocktail(
     db: AsyncSession = Depends(get_db),
 ):
     return await CocktailService.get_cocktail(db, cocktail_id)
-
 
 # 특정 칵테일 정보 수정
 @router.put("/{cocktail_id}", response_model=CocktailDetail)
@@ -52,7 +46,6 @@ async def update_cocktail(
         cocktail_data,
     )
 
-
 # 특정 칵테일 삭제
 @router.delete("/{cocktail_id}")
 async def delete_cocktail(
@@ -62,7 +55,6 @@ async def delete_cocktail(
     await CocktailService.delete_cocktail(db, cocktail_id)
     return {"message": "칵테일이 삭제되었습니다"}
 
-
 # 특정 칵테일 재료 조회
 @router.get("/{cocktail_id}/ingredients", response_model=list[IngredientRead])
 async def get_ingredients_by_cocktail_id(
@@ -70,7 +62,6 @@ async def get_ingredients_by_cocktail_id(
     db: AsyncSession = Depends(get_db),
 ):
     return await CocktailIngredientService.get_ingredients_by_cocktail_id(db, cocktail_id)
-
 
 # 특정 칵테일 재료 추가
 @router.post("/{cocktail_id}/ingredients", response_model=CocktailIngredientRead)
@@ -85,7 +76,6 @@ async def add_cocktail_ingredient(
         cocktail_ingredient.ingredient_id
         )
 
-
 # 특정 칵테일 재료 제거
 @router.delete("/{cocktail_id}/ingredients/{ingredient_id}")
 async def delete_cocktail_ingredient(
@@ -98,8 +88,13 @@ async def delete_cocktail_ingredient(
 
 # 리뷰 작성
 @router.post("/{cocktail_id}/reviews")
-async def create_review(cocktail_id: int,  review:ReviewCreate, db: AsyncSession = Depends(get_db)):
-    return await ReviewService.create_review()
+async def create_review(cocktail_id: int, review: ReviewCreate, user_id: int = Depends(get_user_id), db: AsyncSession = Depends(get_db)):
+    return await ReviewService.create_review(db, cocktail_id, user_id, review)
+
+# 특정 술 리뷰 조회
+@router.get("/{cocktail_id}/reviews")
+async def get_review(cocktail_id: int, db: AsyncSession = Depends(get_db)):
+    return await ReviewService.get_reviews_by_cocktail(db, cocktail_id)
 
 # 즐겨찾기에 칵테일 추가
 @router.post("/{cocktail_id}/favorites", response_model=bool)
